@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Services</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/static/amazon-product-research.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 10px;
+        }
+        h1, h2 {
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #333;
+        }
+        .services-buttons {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .services-buttons button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .services-buttons button:hover {
+            background-color: #0056b3;
+        }
+        .form-container {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+        #result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #result h2 {
+            margin-top: 0;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header class="overlay">
+        <h1>Our Services</h1>
+    </header>
+    <div class="container overlay">
+        <div id="options" class="services-buttons">
+            <button onclick="showForm('crew1')">Service 1</button>
+            <button onclick="showForm('crew2')">Service 2</button>
+            <button onclick="showForm('crew3')">Service 3</button>
+            <button onclick="showForm('crew4')">Service 4</button>
+        </div>
+
+        <div id="form-crew1" class="form-container">
+            <h2>Research For Any Topic</h2>
+            <form id="topic-form-crew1">
+                <label for="topic">Topic:</label>
+                <input type="text" id="topic" name="topic" required><br>
+                <button type="submit">Start</button>
+            </form>
+            <div id="result-crew1" class="result">
+                <h2>Result:</h2>
+                <div id="result-content-crew1"></div>
+            </div>
+        </div>
+
+        <div id="form-crew2" class="form-container">
+            <h2>Research For Specific Product</h2>
+            <form id="product-form-crew2">
+                <label for="product_name">Product Name:</label>
+                <input type="text" id="product_name" name="product_name" required><br>
+                <button type="submit">Start</button>
+            </form>
+            <div id="result-crew2" class="result">
+                <h2>Result:</h2>
+                <div id="result-content-crew2"></div>
+            </div>
+        </div>
+
+        <div id="form-crew3" class="form-container">
+            <h2>Meeting Outline Generation</h2>
+            <form id="topic-form-crew3">
+                <label for="participants">Participants:</label>
+                <input type="text" id="participants" name="participants" required><br>
+                <label for="context">Context:</label>
+                <input type="text" id="context" name="context" required><br>
+                <label for="objective">Objective:</label>
+                <input type="text" id="objective" name="objective" required><br>
+                <button type="submit">Start</button>
+            </form>
+            <div id="result-crew3" class="result">
+                <h2>Result:</h2>
+                <div id="result-content-crew3"></div>
+            </div>
+        </div>
+
+        <div id="form-crew4" class="form-container">
+            <h2>PDF Question Answer</h2>
+            <form id="topic-form-crew4" enctype="multipart/form-data">
+                <label for="pdf_files">Upload PDF Files:</label>
+                <input type="file" id="pdf_files" name="pdf_files" multiple required><br>
+                <label for="question">Question:</label>
+                <input type="text" id="question" name="question" required><br>
+                <button type="submit">Start</button>
+            </form>
+            <div id="result-crew4" class="result">
+                <h2>Result:</h2>
+                <div id="result-content-crew4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(crewType) {
+            $('.form-container').hide();
+            $('#form-' + crewType).show();
+        }
+
+        $(document).ready(function() {
+            $('#topic-form-crew1').on('submit', function(event) {
+                event.preventDefault();
+                var topic = $('#topic').val();
+
+                $.ajax({
+                    url: '/start',
+                    type: 'POST',
+                    data: { topic: topic, crew_type: 'crew1' },
+                    success: function(response) {
+                        $('#result-crew1').show();
+                        $('#result-content-crew1').html(response.result);
+                    },
+                    error: function(xhr) {
+                        $('#result-crew1').show();
+                        $('#result-content-crew1').html('Error: ' + xhr.responseJSON.error);
+                    }
+                });
+            });
+
+            $('#product-form-crew2').on('submit', function(event) {
+                event.preventDefault();
+                var productName = $('#product_name').val();
+
+                $.ajax({
+                    url: '/start',
+                    type: 'POST',
+                    data: { topic: productName, crew_type: 'crew2' },
+                    success: function(response) {
+                        $('#result-crew2').show();
+                        $('#result-content-crew2').html(response.result);
+                    },
+                    error: function(xhr) {
+                        $('#result-crew2').show();
+                        $('#result-content-crew2').html('Error: ' + xhr.responseJSON.error);
+                    }
+                });
+            });
+
+            $('#topic-form-crew3').on('submit', function(event) {
+                event.preventDefault();
+                var participants = $('#participants').val();
+                var context = $('#context').val();
+                var objective = $('#objective').val();
+
+                $.ajax({
+                    url: '/start',
+                    type: 'POST',
+                    data: { participants: participants, context: context, objective: objective, crew_type: 'crew3' },
+                    success: function(response) {
+                        $('#result-crew3').show();
+                        $('#result-content-crew3').html(response.result);
+                    },
+                    error: function(xhr) {
+                        $('#result-crew3').show();
+                        $('#result-content-crew3').html('Error: ' + xhr.responseJSON.error);
+                    }
+                });
+            });
+
+            $('#topic-form-crew4').on('submit', function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                formData.append('crew_type', 'crew4');  // Ensure crew_type is included in the form data
+
+                $.ajax({
+                    url: '/start',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#result-crew4').show();
+                        $('#result-content-crew4').html(response.result);
+                    },
+                    error: function(xhr) {
+                        $('#result-crew4').show();
+                        $('#result-content-crew4').html('Error: ' + xhr.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

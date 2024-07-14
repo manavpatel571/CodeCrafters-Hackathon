@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Code Crafters</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 5.9% 10%;
+        --radius: 0.5rem;
+      }
+      .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-background text-primary-foreground min-h-screen flex flex-col items-center">
+    <nav class="w-full bg-primary text-primary-foreground py-4 px-8 flex justify-between items-center shadow-md">
+      <div class="text-2xl font-bold">Code Crafters</div>
+      <ul class="flex space-x-6">
+        <li><a href="main.html" class="hover:text-secondary">Home</a></li>
+        <li><a href="about.html" class="hover:text-secondary">About</a></li>
+        <li><a href="services.html" class="hover:text-secondary">Services</a></li>
+        <li><a href="contact.html" class="hover:text-secondary">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="flex flex-col items-center justify-center flex-grow">
+      <h1 class="text-primary text-5xl font-bold mb-4 mt-16 animate-bounce">About Us</h1>
+      <p class="text-primary mb-8 text-lg">We are passionate about crafting code</p>
+      <!-- Future content goes here -->
+    </div>
+    <footer class="w-full bg-primary text-primary-foreground py-4 mt-8 text-center">
+      <p>© 2023 Code Crafters. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
